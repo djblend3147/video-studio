@@ -10,9 +10,13 @@
     "setup:whisper": "NODE_USE_ENV_PROXY=1 node scripts/install-whisper.mjs",
     "transcribe": "node scripts/transcribe.mjs",
     "typecheck": "tsc --noEmit",
-    "download": "bash scripts/download.sh"
+    "download": "bash scripts/download.sh",
+    "render:insirah": "remotion render Insirah-5-6 out/insirah-5-6.mp4"
   },
   "dependencies": {
+    "@fontsource/amiri": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
     "@remotion/captions": "^4.0.538",
     "@remotion/cli": "^4.0.538",
     "@remotion/install-whisper-cpp": "^4.0.538",

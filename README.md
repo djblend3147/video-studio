@@ -12,6 +12,13 @@
 
 Herhangi bir kompozisyon: `npx remotion render <Id> out/dosya.mp4 --props='{"title":"Selam"}'`
 
+## Dini Shorts şablonu
+- `src/shorts/` – yeniden kullanılabilir şablon (arka plan, sahneler: `hook`, `ayah`, `compare`, `outro`)
+- `src/videos/insirah-5-6.ts` – ilk video: sadece metni değiştirerek yeni video üret
+- `npm run render:insirah` → `out/insirah-5-6.mp4` (1080×1920, ~30 sn)
+- Yeni video: `src/videos/` içine yeni dosya ekle, `src/Root.tsx`'e `<Composition>` olarak kaydet
+- Fontlar (Amiri, Playfair Display, Inter) npm ile projede; `public/audio/ambient.mp3` ffmpeg ile üretildi (telifsiz)
+
 ## Yapı
 - `src/Root.tsx` – kompozisyonların listesi (yeni animasyonları buraya ekle)
 - `src/HelloWorld.tsx` – örnek animasyon (spring, interpolate, renk geçişi)
