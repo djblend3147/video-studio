@@ -1,0 +1,29 @@
+{
+  "name": "video-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render HelloWorld out/hello.mp4",
+    "render:captions": "remotion render CaptionedVideo out/captioned.mp4",
+    "setup:whisper": "NODE_USE_ENV_PROXY=1 node scripts/install-whisper.mjs",
+    "transcribe": "node scripts/transcribe.mjs",
+    "typecheck": "tsc --noEmit",
+    "download": "bash scripts/download.sh"
+  },
+  "dependencies": {
+    "@remotion/captions": "^4.0.538",
+    "@remotion/cli": "^4.0.538",
+    "@remotion/install-whisper-cpp": "^4.0.538",
+    "@remotion/media-parser": "^4.0.538",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.538"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
