@@ -7,6 +7,8 @@ import { HadisReel, reelDuration } from "./hadis/HadisReel";
 import { ikiKabir } from "./videos/kabir-iki-kabir";
 import { Whiteboard, whiteboardDuration } from "./whiteboard/Whiteboard";
 import { ikiKabirCizim } from "./videos/kabir-iki-kabir-cizim";
+import { CartoonExplainer, cartoonDuration } from "./cartoon/CartoonExplainer";
+import { berzah } from "./videos/berzah";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -56,6 +58,15 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={ikiKabirCizim}
+      />
+      <Composition
+        id="Berzah"
+        component={CartoonExplainer}
+        durationInFrames={cartoonDuration(berzah.scenes)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={berzah}
       />
     </>
   );
