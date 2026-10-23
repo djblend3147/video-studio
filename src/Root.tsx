@@ -3,6 +3,10 @@ import { HelloWorld } from "./HelloWorld";
 import { CaptionedVideo, calculateCaptionedMetadata } from "./CaptionedVideo";
 import { DiniShort, shortDuration } from "./shorts/DiniShort";
 import { insirah56 } from "./videos/insirah-5-6";
+import { HadisReel, reelDuration } from "./hadis/HadisReel";
+import { ikiKabir } from "./videos/kabir-iki-kabir";
+import { Whiteboard, whiteboardDuration } from "./whiteboard/Whiteboard";
+import { ikiKabirCizim } from "./videos/kabir-iki-kabir-cizim";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -34,6 +38,24 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={insirah56}
+      />
+      <Composition
+        id="Kabir-Iki-Kabir"
+        component={HadisReel}
+        durationInFrames={reelDuration(ikiKabir.scenes)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={ikiKabir}
+      />
+      <Composition
+        id="Kabir-Iki-Kabir-Cizim"
+        component={Whiteboard}
+        durationInFrames={whiteboardDuration(ikiKabirCizim.scenes)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={ikiKabirCizim}
       />
     </>
   );
