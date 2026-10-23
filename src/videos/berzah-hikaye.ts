@@ -1,10 +1,10 @@
-import type { StoryProps } from "../cartoon/story/StoryVideo";
+import { type StoryProps, type StoryScene, withVoice } from "../cartoon/story/StoryVideo";
+import { VOICE_LEAD, type SceneVoice } from "../cartoon/story/common";
+import voices from "./berzah-hikaye-voice.json";
 
 // Mealler Diyanet mealine göre kısaltılmıştır — yayından önce kuran.diyanet.gov.tr ile karşılaştır.
 // Rahmân 55:19-20 · Mü'minûn 23:99-100 · Bakara 2:154 · Mü'min 40:46
-export const berzahHikaye: StoryProps = {
-  music: "audio/paper-ambient.mp3",
-  scenes: [
+const scenes: StoryScene[] = [
     {
       kind: "room",
       duration: 210,
@@ -45,5 +45,22 @@ export const berzahHikaye: StoryProps = {
       poster: { kind: "title", top: "Unutma:", big: ["BERZAH", "BİR BEKLEME", "ODASI"], hand: "Kaydet · Paylaş · Takip et" },
       subtitle: ["Berzah bir bekleme odasıdır.", "Nasıl bekleyeceğimizi ise bugün seçiyoruz."],
     },
-  ],
+];
+
+export const berzahHikaye: StoryProps = { music: "audio/paper-ambient.mp3", scenes };
+
+// Voiced version: scene lengths and subtitles follow the recorded narration;
+// the "AZAP" door opens exactly when the Firavun sentence starts.
+export const berzahHikayeSesli: StoryProps = {
+  music: "audio/paper-ambient.mp3",
+  voiced: true,
+  scenes: withVoice(scenes, voices as SceneVoice[]).map((s) =>
+    s.kind === "doors" && s.voice
+      ? {
+          ...s,
+          left: { ...s.left, at: 6 },
+          right: { ...s.right, at: VOICE_LEAD + Math.round(s.voice.sentences[2][0] * 30) - 6 },
+        }
+      : s,
+  ),
 };

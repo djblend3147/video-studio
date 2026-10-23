@@ -10,7 +10,7 @@ import { ikiKabirCizim } from "./videos/kabir-iki-kabir-cizim";
 import { CartoonExplainer, cartoonDuration } from "./cartoon/CartoonExplainer";
 import { berzah } from "./videos/berzah";
 import { StoryVideo, storyDuration } from "./cartoon/story/StoryVideo";
-import { berzahHikaye } from "./videos/berzah-hikaye";
+import { berzahHikaye, berzahHikayeSesli } from "./videos/berzah-hikaye";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -78,6 +78,15 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={berzahHikaye}
+      />
+      <Composition
+        id="Berzah-Hikaye-Sesli"
+        component={StoryVideo}
+        durationInFrames={storyDuration(berzahHikayeSesli.scenes)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={berzahHikayeSesli}
       />
     </>
   );

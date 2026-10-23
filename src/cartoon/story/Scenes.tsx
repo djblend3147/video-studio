@@ -1,11 +1,13 @@
-import { AbsoluteFill, interpolate, random, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { useContext } from "react";
+import { AbsoluteFill, interpolate, random, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import "@fontsource/amiri/700.css";
 import "@fontsource/rubik/500.css";
 import { Room } from "../Room";
 import { Narrator } from "../Narrator";
 import { PosterBody } from "../Poster";
 import type { PosterContent } from "../types";
-import { Camera, Figure, OUT, RefTag, Subtitle, TimeTag, clamp, sentenceTimes } from "./common";
+import { Camera, Figure, OUT, RefTag, SceneVoiceContext, Subtitle, TimeTag, VOICE_LEAD, clamp, sentenceTimes } from "./common";
 
 type Base = { duration: number; subtitle: string[] };
 
@@ -31,9 +33,23 @@ const mouthAt = (sentences: string[], duration: number, frame: number) => {
   return Math.pow(Math.sin(within * Math.PI), 0.7) * (0.55 + random(`w${wi}${frame >> 3}`) * 0.45);
 };
 
+const VoiceNarrator: React.FC<{ file: string }> = ({ file }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const audio = useAudioData(staticFile(file));
+  let level = 0;
+  if (audio && frame >= VOICE_LEAD) {
+    const bins = visualizeAudio({ fps, frame: frame - VOICE_LEAD, audioData: audio, numberOfSamples: 32, smoothing: true });
+    level = Math.min(1, (bins.slice(1, 12).reduce((a, b) => a + b, 0) / 11) * 7);
+  }
+  const mouth = level > 0.12 ? level : 0;
+  return <Narrator mouth={mouth} talking={mouth > 0} />;
+};
+
 export const RoomScene: React.FC<Base & { poster: PosterContent }> = ({ duration, subtitle, poster }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const voice = useContext(SceneVoiceContext);
   const drop = spring({ frame: frame - 6, fps, config: { damping: 13 } });
   const mouth = mouthAt(subtitle, duration, frame);
   return (
@@ -42,7 +58,7 @@ export const RoomScene: React.FC<Base & { poster: PosterContent }> = ({ duration
       <div style={{ position: "absolute", left: 110, top: 255, width: 860, height: 740, background: "#f4ead3", border: `8px solid ${OUT}`, boxShadow: "10px 12px 0 rgba(43,29,20,0.35)", transform: `translateY(${(1 - drop) * -900}px) rotate(${-1.2 + (1 - drop) * 6}deg)`, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "30px 50px", boxSizing: "border-box" }}>
         <PosterBody content={poster} />
       </div>
-      <Narrator mouth={mouth} talking={mouth > 0} />
+      {voice ? <VoiceNarrator file={voice.file} /> : <Narrator mouth={mouth} talking={mouth > 0} />}
       <Subtitle sentences={subtitle} duration={duration} y={1060} />
     </Camera>
   );
