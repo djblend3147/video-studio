@@ -11,7 +11,6 @@ export const berzahHikaye: StoryProps = {
       poster: { kind: "title", top: "Eğer…", big: ["BU GECE", "ÖLSEYDİN?"], hand: "kıyamete kadar neredesin?" },
       subtitle: ["Eğer bu gece ölseydin…", "kıyamete kadar nerede olurdun?"],
     },
-    { kind: "bedroom", duration: 180, time: "03.12", subtitle: ["Saat gece üçü on iki geçiyor.", "Ev sessiz. Herkes uyuyor."] },
     { kind: "card", duration: 120, title: "BERZAH", sub: "ölüm ile kıyamet arası", subtitle: ["Kur'an bu âleme bir isim verir: Berzah."] },
     {
       kind: "seas",
